@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   player: '',
-  items: [],
+  items: []
 };
 
 export const game = createSlice({
@@ -10,7 +10,7 @@ export const game = createSlice({
   initialState: {
     username: null,
     currentPosition: null,
-    loading: false,
+    loading: false
   },
 
   reducers: {
@@ -25,19 +25,19 @@ export const game = createSlice({
     },
     resetGame: () => {
       return initialState;
-    },
-  },
+    }
+  }
 });
 
 export const startGame = () => {
   return (dispatch, getState) => {
     dispatch(game.actions.setLoading(true));
-    fetch('https://wk16-backend.herokuapp.com/start', {
+    fetch('https://labyrinth.technigo.io/', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        'Content-type': 'application/json'
       },
-      body: JSON.stringify({ username: getState().game.username }),
+      body: JSON.stringify({ username: getState().game.username })
       // We're using getState() to get the value from the state variable username instead of passing it into the thunk as an argument
     })
       .then((res) => res.json())
@@ -49,16 +49,16 @@ export const startGame = () => {
 export const nextStep = (type, direction) => {
   return (dispatch, getState) => {
     dispatch(game.actions.setLoading(true));
-    fetch('https://wk16-backend.herokuapp.com/action', {
+    fetch('https://labyrinth.technigo.io/', {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        'Content-type': 'application/json'
       },
       body: JSON.stringify({
         username: getState().game.username,
         type,
-        direction,
-      }),
+        direction
+      })
     })
       .then((res) => res.json())
       .then((data) => {
